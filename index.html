@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f5f4ec" />
+    <meta
+      name="description"
+      content="Una calculadora sencilla para practicar las operaciones básicas."
+    />
+    <title>Cuenta Clara | Calculadora básica</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/styles.css" />
+    <script src="js/calculator.js" defer></script>
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="topbar">
+        <a class="brand" href="./" aria-label="Cuenta Clara, inicio">
+          <span class="brand-mark" aria-hidden="true">÷</span>
+          <span>cuenta clara</span>
+        </a>
+        <span class="topbar-note"><span class="status-dot"></span> Tu espacio para practicar</span>
+      </header>
+
+      <main class="workspace">
+        <section class="intro" aria-labelledby="page-title">
+          <p class="eyebrow"><span>01</span> · Operaciones básicas</p>
+          <h1 id="page-title">Las cuentas,<br /><em>claras.</em></h1>
+          <p class="intro-copy">Elige una operación, introduce tus números y deja que las matemáticas hagan lo suyo.</p>
+          <div class="operation-stamps" aria-label="Operaciones disponibles">
+            <span class="stamp stamp-add" aria-hidden="true">+</span>
+            <span class="stamp stamp-subtract" aria-hidden="true">−</span>
+            <span class="stamp stamp-multiply" aria-hidden="true">×</span>
+            <span class="stamp stamp-divide" aria-hidden="true">÷</span>
+          </div>
+        </section>
+
+        <section class="calculator" aria-labelledby="calculator-title">
+          <div class="calculator-heading">
+            <div>
+              <p class="eyebrow">Tu cálculo</p>
+              <h2 id="calculator-title">Empezamos por aquí</h2>
+            </div>
+            <span class="calculator-badge" aria-hidden="true">✳</span>
+          </div>
+
+          <form id="calculator-form" novalidate>
+            <div class="number-row">
+              <label class="field">
+                <span class="field-label">Primer número <span class="field-index">A</span></span>
+                <input id="number-a" name="numberA" type="number" step="any" inputmode="decimal" placeholder="p. ej. 24" required />
+              </label>
+              <span class="equation-mark" aria-hidden="true">?</span>
+              <label class="field">
+                <span class="field-label">Segundo número <span class="field-index">B</span></span>
+                <input id="number-b" name="numberB" type="number" step="any" inputmode="decimal" placeholder="p. ej. 6" required />
+              </label>
+            </div>
+
+            <label class="field operation-field" for="operation">
+              <span class="field-label">¿Qué operación hacemos?</span>
+              <span class="select-wrap">
+                <select id="operation" name="operation">
+                  <option value="add">Sumar <span>+</span></option>
+                  <option value="subtract">Restar −</option>
+                  <option value="multiply">Multiplicar ×</option>
+                  <option value="divide">Dividir ÷</option>
+                </select>
+                <span class="select-arrow" aria-hidden="true">⌄</span>
+              </span>
+            </label>
+
+            <button class="calculate-button" type="submit">
+              <span>Calcular</span>
+              <span class="button-arrow" aria-hidden="true">↗</span>
+            </button>
+          </form>
+
+          <div class="result-panel" aria-live="polite" aria-atomic="true">
+            <div class="result-copy">
+              <span class="result-label">Resultado</span>
+              <span class="result-hint" id="result-hint">Tu respuesta aparecerá aquí</span>
+            </div>
+            <output class="result-value" id="result" for="number-a number-b operation">—</output>
+          </div>
+
+          <p class="feedback" id="feedback" role="status"></p>
+        </section>
+
+        <aside class="tip" aria-label="Consejo">
+          <span class="tip-icon" aria-hidden="true">✦</span>
+          <p><strong>Un pequeño consejo</strong><br />En una división, el número B no puede ser cero.</p>
+          <span class="tip-doodle" aria-hidden="true">↗</span>
+        </aside>
+      </main>
+
+      <footer class="footer"><span>Hecha para aprender haciendo.</span><span>MATEMÁTICAS · NIVEL 01</span></footer>
+    </div>
+  </body>
+</html>
