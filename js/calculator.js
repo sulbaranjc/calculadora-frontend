@@ -1,64 +1,55 @@
-const form = document.querySelector('#calculator-form');
-const numberAInput = document.querySelector('#number-a');
-const numberBInput = document.querySelector('#number-b');
-const operationInput = document.querySelector('#operation');
-const resultOutput = document.querySelector('#result');
-const resultHint = document.querySelector('#result-hint');
-const feedback = document.querySelector('#feedback');
+// Versión local: calcula sin consultar el backend.
+const formulario = document.getElementById('calculator-form');
+const entradaA = document.getElementById('number-a');
+const entradaB = document.getElementById('number-b');
+const operacion = document.getElementById('operation');
+const resultado = document.getElementById('result');
+const mensaje = document.getElementById('feedback');
 
-const operations = {
-  add: { symbol: '+', calculate: (a, b) => a + b },
-  subtract: { symbol: '−', calculate: (a, b) => a - b },
-  multiply: { symbol: '×', calculate: (a, b) => a * b },
-  divide: { symbol: '÷', calculate: (a, b) => a / b },
-};
+formulario.addEventListener('submit', manejarEnvio);
 
-form.addEventListener('submit', (event) => {
-  event.preventDefault();
-  feedback.textContent = '';
+// Valida el formulario, calcula y muestra el resultado.
+function manejarEnvio(evento) {
+  evento.preventDefault();
+  mensaje.textContent = '';
 
-  const rawA = numberAInput.value.trim();
-  const rawB = numberBInput.value.trim();
-
-  if (rawA === '' || rawB === '') {
-    showError('Escribe los dos números para poder calcular.');
-    (rawA === '' ? numberAInput : numberBInput).focus();
+  if (entradaA.value === '' || entradaB.value === '') {
+    mostrarError('Escribe los dos números.');
     return;
   }
 
-  const a = Number(rawA);
-  const b = Number(rawB);
-  const operation = operations[operationInput.value];
+  const a = Number(entradaA.value);
+  const b = Number(entradaB.value);
 
   if (!Number.isFinite(a) || !Number.isFinite(b)) {
-    showError('Introduce números válidos para continuar.');
+    mostrarError('Introduce números válidos.');
     return;
   }
 
-  if (operationInput.value === 'divide' && b === 0) {
-    showError('No se puede dividir entre cero. Prueba con otro valor para B.');
-    numberBInput.focus();
+  if (operacion.value === 'division' && b === 0) {
+    mostrarError('No se puede dividir entre cero.');
     return;
   }
 
-  const result = operation.calculate(a, b);
-  if (!Number.isFinite(result)) {
-    showError('El resultado no se puede representar con estos valores.');
+  let calculo;
+  switch (operacion.value) {
+    case 'suma': calculo = a + b; break;
+    case 'resta': calculo = a - b; break;
+    case 'multiplicacion': calculo = a * b; break;
+    case 'division': calculo = a / b; break;
+    default: mostrarError('Operación no válida.'); return;
+  }
+
+  if (!Number.isFinite(calculo)) {
+    mostrarError('El resultado está fuera de rango.');
     return;
   }
 
-  resultOutput.textContent = new Intl.NumberFormat('es-ES', {
-    maximumFractionDigits: 10,
-  }).format(result);
-  resultHint.textContent = `${formatNumber(a)} ${operation.symbol} ${formatNumber(b)}`;
-});
-
-function showError(message) {
-  feedback.textContent = message;
-  resultOutput.textContent = '—';
-  resultHint.textContent = 'Revisa los datos e inténtalo de nuevo';
+  resultado.textContent = String(calculo);
 }
 
-function formatNumber(value) {
-  return new Intl.NumberFormat('es-ES', { maximumFractionDigits: 10 }).format(value);
+// Muestra el error y borra el resultado anterior.
+function mostrarError(texto) {
+  mensaje.textContent = texto;
+  resultado.textContent = '—';
 }
